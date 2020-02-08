@@ -4,7 +4,11 @@ class App extends Component {
   render() {
   return (
     <div>
-    <h>Gurkenman</h>
+    <h1>Gurkenman</h1>
+    <button className="ui icon button"> 
+    <i className="smile icon"></i>
+    CSS button 
+    </button>
     </div>
   )
   }
