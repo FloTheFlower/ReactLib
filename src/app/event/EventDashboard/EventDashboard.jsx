@@ -113,8 +113,12 @@ const eventsFromDashboard = [
                 </Grid.Column>
                 <Grid.Column width= {6}>
                     <Button onClick={this.handleCreateFormOpen} positive content= 'Create Event' />
-                    {isOpen && <EventForm createEvent={this.handleCreateEvent}
-                    cancelFormOpen = {this.handleFormCancel}  />}
+                    {isOpen && (
+                    <EventForm 
+                    selectedEvent={selectedEvent}
+                    createEvent={this.handleCreateEvent}
+                    cancelFormOpen = {this.handleFormCancel}  />
+                    )}
                     
                 </Grid.Column>
 
