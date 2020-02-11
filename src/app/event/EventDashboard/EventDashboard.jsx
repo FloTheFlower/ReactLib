@@ -67,10 +67,24 @@ const eventsFromDashboard = [
         selectedEvent: null
     };
 
-    handleIsOpenToggle = () => {
-        this.setState(({isOpen}) => ( {
-            isOpen: !isOpen
-        }))
+    // handleIsOpenToggle = () => {
+    //     this.setState(({isOpen}) => ( {
+    //         isOpen: !isOpen
+    //     }))
+    // }
+
+    handleCreateFormOpen = () => {
+      this.setState({
+        isOpen: true,
+        selectedEvent: null
+      })
+    }
+
+    handleFormCancel = () => {
+      this.setState({
+        isOpen: false
+
+      })
     }
 
     handleCreateEvent = (newEvent) => {
@@ -89,17 +103,18 @@ const eventsFromDashboard = [
         })
     }
 
+    
     render() {
-        const {events, isOpen} = this.state;
+        const {events, isOpen, selectedEvent} = this.state;
         return (
             <Grid> 
                 <Grid.Column width= {10}>
-                   < EventList events={events} />
+                   < EventList events={events} selectEvent={this.handleSelectEvent} />
                 </Grid.Column>
                 <Grid.Column width= {6}>
-                    <Button onClick={this.handleIsOpenToggle} positive content= 'Create Event' />
+                    <Button onClick={this.handleCreateFormOpen} positive content= 'Create Event' />
                     {isOpen && <EventForm createEvent={this.handleCreateEvent}
-                    cancelFormOpen = {this.handleIsOpenToggle}  />}
+                    cancelFormOpen = {this.handleFormCancel}  />}
                     
                 </Grid.Column>
 
