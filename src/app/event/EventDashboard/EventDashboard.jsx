@@ -97,11 +97,25 @@ const eventsFromDashboard = [
     }
 
     handleSelectEvent = event  => {
-      console.log(event);
         this.setState({
             selectedEvent: event,
             isOpen: true
         })
+    }
+
+    handleUpdateEvent = (updatedEvent) => {
+      this.setState(({events}) => ({
+        events: events.map(event => {
+          if  (event.id === updatedEvent.id) {
+            return {...updatedEvent}
+          } else {
+            return event 
+          }
+
+        }),
+        isOpen: false,  
+        selectedEvent: null
+      }))
     }
 
     
@@ -116,7 +130,8 @@ const eventsFromDashboard = [
                     <Button onClick={this.handleCreateFormOpen} positive content= 'Create Event' />
                     {isOpen && (
                     <EventForm 
-                    key={selectedEvent.id ? selectedEvent.id : 0}
+                    key={selectedEvent ? selectedEvent.id : 0}
+                    updatedEvent={this.handleUpdateEvent}
                     selectedEvent={selectedEvent}
                     createEvent={this.handleCreateEvent}
                     cancelFormOpen = {this.handleFormCancel}  />
