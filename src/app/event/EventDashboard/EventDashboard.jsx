@@ -96,7 +96,8 @@ const eventsFromDashboard = [
         }))
     }
 
-    handleSelectEvent = (event ) => {
+    handleSelectEvent = event  => {
+      console.log(event);
         this.setState({
             selectedEvent: event,
             isOpen: true
