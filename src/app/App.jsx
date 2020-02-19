@@ -10,25 +10,28 @@ import { SettingsDashboard } from "./event/Settings/SettingsDashboard";
 import EventForm from "./event/EventForm/EventForm";
 import { UserDetailedPage } from "./event/UserDetailed/UserDetailedPage";
 
-
 class App extends Component {
   render() {
     return (
-      <div>
-        <h1>Gurkenman</h1>
-        <Fragment>
-          <NavBar />
-          <Container className="main">
-            <Route exact path ='/' component={HomePage } />
-            <Route path ='/events' component={EventDashboard} />
-            <Route path ='/events/:id' component={EventDetailedPage} />
-            <Route path ='/people' component={PeopleDashboard} />
-            <Route path ='/profile/:id' component={UserDetailedPage} />
-            <Route path ='/settings' component={SettingsDashboard} />
-            <Route path ='/createEvent' component={EventForm} />
-          </Container>
-        </Fragment>
-      </div>
+      <Fragment>
+        <Route exact path="/" component={HomePage} />
+        <Route
+          path="/(.+)"
+          render={() => (
+            <Fragment>
+              <NavBar />
+              <Container className="main">
+                <Route path="/events" component={EventDashboard} />
+                <Route path="/events/:id" component={EventDetailedPage} />
+                <Route path="/people" component={PeopleDashboard} />
+                <Route path="/profile/:id" component={UserDetailedPage} />
+                <Route path="/settings" component={SettingsDashboard} />
+                <Route path="/createEvent" component={EventForm} />
+              </Container>
+            </Fragment>
+          )}
+        />
+      </Fragment>
     );
   }
 }
