@@ -49,8 +49,8 @@ const actions  = {
     handleCreateEvent = (newEvent) => {
         newEvent.id = cuid();
         newEvent.hostPhotoURL = '/assets/user.png';
+        this.props.createEvent(newEvent);
         this.setState(({events}) => ({
-            events: [...events, newEvent],
             isOpen: false
         }))
     }
