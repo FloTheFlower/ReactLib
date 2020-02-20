@@ -22,7 +22,6 @@ const actions  = {
  class EventDashboard extends Component {
 
     state = {
-      
         isOpen: false,
         selectedEvent: null
     };
@@ -64,15 +63,8 @@ const actions  = {
     }
 
     handleUpdateEvent = (updatedEvent) => {
+      this.props.updateEvent(updatedEvent);
       this.setState(({events}) => ({
-        events: events.map(event => {
-          if  (event.id === updatedEvent.id) {
-            return {...updatedEvent}
-          } else {
-            return event 
-          }
-
-        }),
         isOpen: false,  
         selectedEvent: null
       }))
