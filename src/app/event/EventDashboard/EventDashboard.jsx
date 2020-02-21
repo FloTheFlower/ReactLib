@@ -75,7 +75,7 @@ const actions  = {
     }
 
     
-    render() {
+    render() { 
         const { isOpen, selectedEvent} = this.state;
         const {events} = this.props;
         return (

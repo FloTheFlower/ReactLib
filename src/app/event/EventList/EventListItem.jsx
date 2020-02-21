@@ -41,8 +41,9 @@ class EventListItem extends Component {
           
           <Button onClick={() => deleteEvent(event.id)} 
           as="a" color="red" floated="right" content="Delete" />
+
           <Button 
-          as={Link} to={'/events/${event.id}'} color="teal" floated="right" content="View" />
+          as={Link} to={`/events/${event.id}`} color="teal" floated="right" content="View" />
 
         </Segment>
       </Segment.Group>

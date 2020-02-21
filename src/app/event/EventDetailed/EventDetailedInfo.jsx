@@ -1,7 +1,7 @@
 import React from 'react'
 import { Segment, Grid, Icon, Button } from 'semantic-ui-react'
 
-export const EventDetailedInfo = ({event}) => {
+ const EventDetailedInfo = ({event}) => {
     return (
         
            <Segment.Group>
@@ -41,3 +41,5 @@ export const EventDetailedInfo = ({event}) => {
             </Segment.Group>
     )
 }
+
+export default EventDetailedInfo;
