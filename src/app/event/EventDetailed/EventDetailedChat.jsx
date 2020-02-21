@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Segment, Header, Comment, Form, Button } from 'semantic-ui-react'
 
 export const EventDetailedChat = () => {
     return (
-          <div>
+          <Fragment>
             <Segment
               textAlign="center"
               attached="top"
@@ -88,6 +88,6 @@ export const EventDetailedChat = () => {
                 </Form>
               </Comment.Group>
             </Segment>
-          </div>
+            </Fragment>
     )
 }
