@@ -11,7 +11,7 @@ class EventList extends Component {
                {events.map(event => (
 
                    <EventListItem key={event.id} 
-                   event={event} selectEvent={selectEvent} deleteEvent={deleteEvent}/>
+                   event={event} deleteEvent={deleteEvent}/>
                ))}
            
             </Fragment>

@@ -3,7 +3,7 @@ import { Form, Segment, Button } from "semantic-ui-react";
 import { connect } from 'react-redux';
 import { createEvent, updateEvent} from '../eventActions';
 import cuid from "cuid";
-import { parseConfigFileTextToJson } from "typescript";
+import { reduxForm, Field} from 'redux-form';
 
 const mapState = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
@@ -46,6 +46,7 @@ class EventForm extends Component {
     evt.preventDefault();
     if  (this.state.id){
       this.props.updatedEvent(this.state);
+      this.props.history.push(`/events/${this.state.id}`)
     } else {
       const newEvent = {
         ...this.state,
@@ -53,7 +54,7 @@ class EventForm extends Component {
         hostPhotoURL: '/assets/user.png'
       }
     this.props.createEvent(newEvent);
-    this.props.history.push(`/events/${newEvent.id}`)
+    this.props.history.push(`/events`)
   }
   };
 
@@ -69,15 +70,7 @@ class EventForm extends Component {
     return (
       <Segment>
         <Form onSubmit={this.handleFormSubmit} autoComplete="off">
-          <Form.Field>
-            <label>Event Title</label>
-            <input
-              name="title"
-              onChange={this.handleInputChange}
-              value={title}
-              placeholder="Event Title"
-            />
-          </Form.Field>
+         <Field name = 'title' component='input' placeholder='Event Title'/>
 
           <Form.Field>
             <label>Event Date</label>
@@ -132,4 +125,4 @@ class EventForm extends Component {
   }
 }
 
-export default connect(mapState, actions)(EventForm);
+export default connect(mapState, actions) (reduxForm({form: 'eventForm'}) (EventForm));
