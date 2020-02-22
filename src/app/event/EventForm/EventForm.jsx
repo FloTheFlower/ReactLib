@@ -3,6 +3,7 @@ import { Form, Segment, Button } from "semantic-ui-react";
 import { connect } from 'react-redux';
 import { createEvent, updateEvent} from '../eventActions';
 import cuid from "cuid";
+import { parseConfigFileTextToJson } from "typescript";
 
 const mapState = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
@@ -51,7 +52,8 @@ class EventForm extends Component {
         id: cuid(),
         hostPhotoURL: '/assets/user.png'
       }
-    this.props.createEvent(this.state);
+    this.props.createEvent(newEvent);
+    this.props.history.push(`/events/${newEvent.id}`)
   }
   };
 
