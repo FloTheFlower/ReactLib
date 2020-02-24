@@ -6,6 +6,7 @@ import cuid from "cuid";
 import { reduxForm, Field} from 'redux-form';
 import { Textinput } from "../../common/util/form/Textinput";
 import { Textarea } from "../../common/util/form/Textarea";
+import { SelectInput } from "../../common/util/form/SelectInput";
 
 const mapState = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
@@ -28,10 +29,22 @@ const mapState = (state, ownProps) => {
   }
 }
 
+
+
+
 const actions = {
   createEvent,
   updateEvent
 }
+
+const category = [
+  {key: 'drinks', text: 'Drinks', value: 'drinks'},
+  {key: 'culture', text: 'Culture', value: 'culture'},
+  {key: 'film', text: 'Film', value: 'film'},
+  {key: 'food', text: 'Food', value: 'food'},
+  {key: 'music', text: 'Music', value: 'music'},
+  {key: 'travel', text: 'Travel', value: 'travel'},
+];
 
 class EventForm extends Component {
 
@@ -78,7 +91,7 @@ class EventForm extends Component {
           <Header sub color='teal' content='Event Details'/>
         <Form onSubmit={this.handleFormSubmit} autoComplete="off">
          <Field name = 'title' component={Textinput} placeholder='Give your event a name'/>
-         <Field name = 'category' component={Textinput} placeholder='What is your event about?'/>
+         <Field name = 'category' type='text' component={SelectInput} options={category} multiple={true} placeholder='What is your event about?'/>
          <Field name = 'description' component={Textarea}
          rows = {3}
          placeholder='Tell us about your event'/>
