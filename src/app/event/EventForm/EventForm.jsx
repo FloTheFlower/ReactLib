@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { Form, Segment, Button } from "semantic-ui-react";
+import { Form, Segment, Button, Grid, Header } from "semantic-ui-react";
 import { connect } from 'react-redux';
 import { createEvent, updateEvent} from '../eventActions';
 import cuid from "cuid";
 import { reduxForm, Field} from 'redux-form';
-import { Textinput } from "../../common/util/form/textInput";
+import { Textinput } from "../../common/util/form/Textinput";
+import { Textarea } from "../../common/util/form/Textarea";
 
 const mapState = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
@@ -33,6 +34,8 @@ const actions = {
 }
 
 class EventForm extends Component {
+
+  // state and componentdidmount sollte eigentlich geloescht werden, aber it broke als ich es geloscht habe, also drin gelassen
   state = {...this.props.event};
 
   componentDidMount(){
@@ -66,60 +69,25 @@ class EventForm extends Component {
   };
 
   render() {
-    const { title, venue, city, date, hostedBy } = this.state;
+
 
     return (
-      <Segment>
+      <Grid>
+        <Grid.Column width={10}>
+        <Segment>
+          <Header sub color='teal' content='Event Details'/>
         <Form onSubmit={this.handleFormSubmit} autoComplete="off">
-         <Field name = 'title' component={Textinput} placeholder='Event Title'/>
-         <Field name = 'category' component={Textinput} placeholder='Event Title'/>
-         <Field name = 'description' component={Textinput} placeholder='Event Title'/>
-         <Field name = 'city' component={Textinput} placeholder='Event Title'/>
-         <Field name = 'venue' component={Textinput} placeholder='Event Title'/>
-         <Field name = 'date' component={Textinput} placeholder='Event Title'/>
-        
+         <Field name = 'title' component={Textinput} placeholder='Give your event a name'/>
+         <Field name = 'category' component={Textinput} placeholder='What is your event about?'/>
+         <Field name = 'description' component={Textarea}
+         rows = {3}
+         placeholder='Tell us about your event'/>
 
-
-          <Form.Field>
-            <label>Event Date</label>
-            <input
-              type="date"
-              name="date"
-              onChange={this.handleInputChange}
-              value={date}
-              placeholder="Event Date"
-            />
-          </Form.Field>
-
-          <Form.Field>
-            <label>City</label>
-            <input
-              placeholder="City event is taking place"
-              name="city"
-              onChange={this.handleInputChange}
-              value={city}
-            />
-          </Form.Field>
-
-          <Form.Field>
-            <label>Venue</label>
-            <input
-              placeholder="Enter the Venue of the event"
-              name="venue"
-              onChange={this.handleInputChange}
-              value={venue}
-            />
-          </Form.Field>
-
-          <Form.Field>
-            <label>Hosted By</label>
-            <input
-              placeholder="Enter the name of person hosting"
-              name="hostedBy"
-              onChange={this.handleInputChange}
-              value={hostedBy}
-            />
-          </Form.Field>
+         <Header sub color='teal'content='Event Location Details'></Header>
+         <Field name = 'city' component={Textinput} placeholder='Event City'/>
+         <Field name = 'venue' component={Textinput} placeholder='Event Venue'/>
+         <Field name = 'date' component={Textinput} placeholder='Event Date'/>
+      
 
           <Button positive type="submit">
             Submit
@@ -129,8 +97,14 @@ class EventForm extends Component {
           </Button>
         </Form>
       </Segment>
+      </Grid.Column>
+      </Grid>
+      
     );
   }
 }
 
-export default connect(mapState, actions) (reduxForm({form: 'eventForm'}) (EventForm));
+export default connect(
+  mapState, actions
+  ) 
+  (reduxForm({form: 'eventForm'}) (EventForm));
