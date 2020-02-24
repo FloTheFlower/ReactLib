@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { createEvent, updateEvent} from '../eventActions';
 import cuid from "cuid";
 import { reduxForm, Field} from 'redux-form';
+import { Textinput } from "../../common/util/form/textInput";
 
 const mapState = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
@@ -70,7 +71,14 @@ class EventForm extends Component {
     return (
       <Segment>
         <Form onSubmit={this.handleFormSubmit} autoComplete="off">
-         <Field name = 'title' component='input' placeholder='Event Title'/>
+         <Field name = 'title' component={Textinput} placeholder='Event Title'/>
+         <Field name = 'category' component={Textinput} placeholder='Event Title'/>
+         <Field name = 'description' component={Textinput} placeholder='Event Title'/>
+         <Field name = 'city' component={Textinput} placeholder='Event Title'/>
+         <Field name = 'venue' component={Textinput} placeholder='Event Title'/>
+         <Field name = 'date' component={Textinput} placeholder='Event Title'/>
+        
+
 
           <Form.Field>
             <label>Event Date</label>
