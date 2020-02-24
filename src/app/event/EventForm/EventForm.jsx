@@ -13,14 +13,14 @@ import  DateInput  from "../../common/util/form/DateInput";
 const mapState = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
 
-  let event = {  }
+  let event = {}
 
   if (eventId && state.events.length > 0 ){
     event= state.events.filter(event => event.id === eventId)[0]
   }
 
   return {
-    initialValues: event
+    initalValues: event
   };
 }; 
 
@@ -65,7 +65,7 @@ class EventForm extends Component {
 
   onFormSubmit = values => {
     if  (this.props.initalValues.id){
-      this.props.updatedEvent(values);
+      this.props.updateEvent(values);
       this.props.history.push(`/events/${this.props.initalValues.id}`)
     } else {
       const newEvent = {
@@ -79,11 +79,7 @@ class EventForm extends Component {
   }
   };
 
-  handleInputChange = ({target: {name, value}}) => {
-    this.setState({
-      [name]: value
-    });
-  };
+ 
 
   render() {
     const {history, initalValues, invalid, submitting, pristine} = this.props;
@@ -92,7 +88,6 @@ class EventForm extends Component {
         <Grid.Column width={10}>
         <Segment>
          <Header sub color='teal' content='Event Details'/>
-         
          <Form onSubmit= {this.props.handleSubmit(this.onFormSubmit)} autoComplete="off">
          <Field name = 'title' component={Textinput} placeholder='Give your event a name'/>
 
@@ -105,7 +100,7 @@ class EventForm extends Component {
          <Header sub color='teal'content='Event Location Details'></Header>
          <Field name = 'city' component={Textinput} placeholder='Event City'/>
          <Field name = 'venue' component={Textinput} placeholder='Event Venue'/>
-         <Field name = 'date' component={DateInput} dateFromat='dd LLL yyyy h:mm a' 
+         {/* <Field name = 'date' component={DateInput} dateFromat='dd LLL YYYY h:mm a'  */}
          showTimeSelect
          timeFormat= 'HH:mm'
          placeholder='Event Date'/>
@@ -132,6 +127,7 @@ class EventForm extends Component {
 }
 
 export default connect(
-  mapState, actions
+  mapState, 
+   actions
   ) 
   (reduxForm({form: 'eventForm', validate}) (EventForm));
