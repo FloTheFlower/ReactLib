@@ -1,3 +1,5 @@
+/* global google */
+
 import React, { Component } from "react";
 import { Form, Segment, Button, Grid, Header } from "semantic-ui-react";
 import { connect } from 'react-redux';
@@ -9,6 +11,9 @@ import  Textinput  from "../../common/util/form/Textinput";
 import  Textarea  from "../../common/util/form/Textarea";
 import  SelectInput  from "../../common/util/form/SelectInput";
 import  DateInput  from "../../common/util/form/DateInput";
+import  PlaceInput  from "../../common/util/form/PlaceInput";
+import {getLatLng, geocodeByAddress} from 'react-places-autocomplete'
+
 
 const mapState = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
@@ -52,18 +57,13 @@ const category = [
 
 class EventForm extends Component {
 
-  // state and componentdidmount sollte eigentlich geloescht werden, aber it broke als ich es geloscht habe, also drin gelassen
-  // state = {...this.props.event};
-
-  // componentDidMount(){
-  //   if (this.props.selectedEvent !== null) {
-  //     this.setState({
-  //     ...this.props.selectedEvent
-  //   }) 
-  //   }
-  // }
+    state = {
+      cityLatLng: {},
+      venueLatLng: {}
+    }
 
   onFormSubmit = values => {
+    values.venueLatLng = this.state.venueLatLng;
     if  (this.props.initalValues.id){
       this.props.updateEvent(values);
       this.props.history.push(`/events/${this.props.initalValues.id}`)
@@ -80,6 +80,32 @@ class EventForm extends Component {
   };
 
  
+  handleCitySelect = selectedCity => {
+    geocodeByAddress(selectedCity)
+      .then(results => getLatLng(results[0]))
+      .then (latlng => {
+        this.setState({
+          cityLatLng: latlng
+        })
+      })
+      .then(() => {
+          this.props.change('city', selectedCity)
+      })
+  }
+
+  handleVenueSelect = selectedVenue => {
+    geocodeByAddress(selectedVenue)
+      .then(results => getLatLng(results[0]))
+      .then (latlng => {
+        this.setState({
+          venueLatLng: latlng
+        })
+      })
+      .then(() => {
+          this.props.change('venue', selectedVenue)
+      })
+  }
+
 
   render() {
     const {history, initalValues, invalid, submitting, pristine} = this.props;
@@ -98,8 +124,24 @@ class EventForm extends Component {
          placeholder='Tell us about your event'/>
 
          <Header sub color='teal'content='Event Location Details'></Header>
-         <Field name = 'city' component={Textinput} placeholder='Event City'/>
-         <Field name = 'venue' component={Textinput} placeholder='Event Venue'/>
+         <Field 
+         name = 'city' 
+         component={PlaceInput} 
+         options={{ types: ['(cities)']}}
+         onSelect={this.handleCitySelect}
+         placeholder='Event City'/>
+
+
+         <Field 
+         name = 'venue' 
+         component={PlaceInput} 
+         options={{ 
+          location: new google.maps.LatLng(this.state.cityLatLng),
+          radius: 1000,
+          types: ['establishment']
+          }}
+          onSelect={this.handleVenueSelect}
+         placeholder='Event Venue'/>
 
          <Field
                 name='date'

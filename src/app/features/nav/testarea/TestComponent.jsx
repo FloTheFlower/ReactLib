@@ -3,6 +3,7 @@ import {connect } from 'react-redux';
 import {incrementCounter, decrementCounter} from './testActions'
 import { Button } from 'semantic-ui-react';
 import TestPlaceInput from './TestPlaceInput';
+
 const mapState = (state) => ({
 data: state.test.data
 })
@@ -24,6 +25,7 @@ const actions = {
                 <br />
                 <br />
                 <TestPlaceInput />
+              
             </div>
         )
     }
