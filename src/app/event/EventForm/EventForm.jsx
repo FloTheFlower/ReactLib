@@ -100,10 +100,15 @@ class EventForm extends Component {
          <Header sub color='teal'content='Event Location Details'></Header>
          <Field name = 'city' component={Textinput} placeholder='Event City'/>
          <Field name = 'venue' component={Textinput} placeholder='Event Venue'/>
-         {/* <Field name = 'date' component={DateInput} dateFromat='dd LLL YYYY h:mm a'  */}
-         showTimeSelect
-         timeFormat= 'HH:mm'
-         placeholder='Event Date'/>
+
+         <Field
+                name='date'
+                component={DateInput}
+                dateFormat='dd LLL yyyy h:mm a'
+                placeholder='Event date'
+                showTimeSelect
+                timeFormat='HH:mm'
+              />
       
 
           <Button disabled={invalid || submitting || pristine} positive type="submit">

@@ -1,14 +1,23 @@
-import React from 'react'
-import { Form } from 'semantic-ui-react'
+import React from "react";
+import { Form, Label } from "semantic-ui-react";
 
-export const Textinput = ({
-    input, width, placeholder, type, meta: {touched, error}
+ const Textinput = ({
+  input,
+  width,
+  placeholder,
+  type,
+  meta: { touched, error }
 }) => {
-    return (
-      <Form.Field  error={touched && !!error}   >
-            <input {...input} placeholder={placeholder} type={type} />
+  return (
+    <Form.Field error={touched && !!error}>
+      <input {...input} placeholder={placeholder} type={type} />
+      {touched && error && (
+        <Label basic color="red">
+          {error}
+        </Label>
+      )}
+    </Form.Field>
+  );
+};
 
-      </Form.Field>
-    )
-}
- 
+export default Textinput
