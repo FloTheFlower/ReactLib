@@ -6,10 +6,11 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css'
 import { Provider } from 'react-redux';
 import { configureStore } from './app/store/configureStore';
+import { loadEvents } from './app/event/eventActions';
 
 
 const store = configureStore();
-
+store.dispatch(loadEvents())
 
 const RootEl =  document.getElementById('root');
 

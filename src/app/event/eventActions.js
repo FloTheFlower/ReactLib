@@ -1,5 +1,5 @@
 import { CREATE_EVENT, UPDATE_EVENT, DELETE_EVENT, FETCH_EVENTS } from "./eventConstants"
-import { asyncActionStart, asyncActionFinish } from "../features/async/asyncActions"
+import { asyncActionStart, asyncActionFinish, asyncActionError } from "../features/async/asyncActions"
 import { fetchSampleData } from "../data/mockApi"
 
 export const createEvent = (event) => {
@@ -43,7 +43,8 @@ export const loadEvents = () => {
             dispatch(asyncActionFinish())
         }
         catch(error) {
-
+            console.log(error);
+            dispatch(asyncActionError())
         }
     }
 }
