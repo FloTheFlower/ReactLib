@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Segment, Button } from 'semantic-ui-react';
 import { Field, reduxForm } from 'redux-form';
-import TextInput from '../../../common/util/form/TextInput'; 
+import Textinput from '../../../common/form/Textinput'; 
 
 
 const LoginForm = () => {
@@ -10,13 +10,13 @@ const LoginForm = () => {
       <Segment>
         <Field
           name="email"
-          component={TextInput}
+          component={Textinput}
           type="text"
           placeholder="Email Address"
         />
         <Field
           name="password"
-          component={TextInput}
+          component={Textinput}
           type="password"
           placeholder="password"
         />

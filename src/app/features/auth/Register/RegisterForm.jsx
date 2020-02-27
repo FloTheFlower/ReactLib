@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Segment, Button } from 'semantic-ui-react';
 import { Field, reduxForm } from 'redux-form';
-import TextInput from '../../../app/common/util/form/TextInput';
+import Textinput from '../../../common/form/Textinput';
 
 const RegisterForm = () => {
   return (
@@ -11,19 +11,19 @@ const RegisterForm = () => {
           <Field
             name="displayName"
             type="text"
-            component={TextInput}
+            component={Textinput}
             placeholder="Known As"
           />
           <Field
             name="email"
             type="text"
-            component={TextInput}
+            component={Textinput}
             placeholder="Email"
           />
           <Field
             name="password"
             type="password"
-            component={TextInput}
+            component={Textinput}
             placeholder="Password"
           />
           <Button fluid size="large" color="teal">
