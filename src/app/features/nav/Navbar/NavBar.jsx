@@ -3,15 +3,30 @@ import { Menu, Container, Button } from 'semantic-ui-react';
 import { NavLink, Link, withRouter } from 'react-router-dom';
 import { SignedOutMenu } from '../menus/SignedOutMenu';
 import { SignedInMenu } from '../menus/SignedInMenu';
+import {connect} from 'react-redux'
+import {openModal} from '../../modals/modalActions'
+
+
+const actions = {
+  openModal
+}
 
  class NavBar extends Component {
 
   state = {
-    authenticated: true
+    authenticated: false
   }
 
-   handleSignIn = () => this.setState({ authenticated: true });
-  //  handleSignOut = () => this.setState({ authenticated: false });
+   handleSignIn = () => {
+     this.props.openModal('LoginModal')
+   }
+
+   handleRegister = () => {
+
+    this.props.openModal('RegisterModal')
+   }
+
+
    
    handleSignOut = () => {
      this.setState({ authenticated: false });
@@ -36,7 +51,7 @@ import { SignedInMenu } from '../menus/SignedInMenu';
         {authenticated ? (
         <SignedInMenu signout={this.handleSignOut} />
         ) : (
-        <SignedOutMenu signin={this.handleSignIn} />
+        <SignedOutMenu signin={this.handleSignIn} register={this.handleRegister} />
         )}             
                   </Container>
                 </Menu>
@@ -44,4 +59,4 @@ import { SignedInMenu } from '../menus/SignedInMenu';
     }
 }
 
-export default withRouter(NavBar);
+export default withRouter(connect(null, actions)(NavBar));
