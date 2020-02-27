@@ -7,11 +7,11 @@ import { createEvent, updateEvent} from '../eventActions';
 import  cuid  from "cuid";
 import {reduxForm, Field} from 'redux-form';
 import {composeValidators, combineValidators, isRequired, hasLengthGreaterThan} from 'revalidate'
-import  Textinput  from "../../common/util/form/Textinput";
-import  Textarea  from "../../common/util/form/Textarea";
-import  SelectInput  from "../../common/util/form/SelectInput";
-import  DateInput  from "../../common/util/form/DateInput";
-import  PlaceInput  from "../../common/util/form/PlaceInput";
+import  Textinput  from "../../common/form/Textinput";
+import  Textarea  from "../../common/form/Textarea";
+import  SelectInput  from "../../common/form/SelectInput";
+import  DateInput  from "../../common/form/DateInput";
+import  PlaceInput  from "../../common/form/PlaceInput";
 import {getLatLng, geocodeByAddress} from 'react-places-autocomplete'
 
 

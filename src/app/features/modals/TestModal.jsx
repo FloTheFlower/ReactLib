@@ -1,9 +1,16 @@
 import React from 'react'
 import { Modal } from 'semantic-ui-react';
+import {connect} from 'react-redux'
+import {closeModal} from './modalActions'
 
- const TestModal = () => {
+const actions = {
+closeModal
+
+}
+
+ const TestModal = ({closeModal}) => {
     return (
-            <Modal closeIcon="close" open={true}>
+            <Modal closeIcon="close" open={true} onClose={closeModal}>
               <Modal.Header>Test Modal</Modal.Header>
               <Modal.Content>
                 <Modal.Description>
@@ -14,4 +21,4 @@ import { Modal } from 'semantic-ui-react';
     )
 }
 
-export default TestModal;
+export default connect(null,  actions)(TestModal);
