@@ -4,6 +4,7 @@ import EventList from '../EventList/EventList'
 import {connect} from 'react-redux'
 import {createEvent, deleteEvent, updateEvent} from '../eventActions'
 import LoadingComponent from '../../layout/LoadingComponent'
+import EventActivity from '../EventActivity/EventActivity'
 
 const mapState = (state) => ({
   events: state.events,
@@ -35,6 +36,7 @@ const actions  = {
                 </Grid.Column>
                 <Grid.Column width= {6}>
                    <h2> Activity Feed </h2>
+                   <EventActivity />
                 </Grid.Column>
 
             </Grid>
