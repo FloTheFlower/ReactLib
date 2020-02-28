@@ -5,9 +5,10 @@ import {connect} from 'react-redux'
 import {createEvent, deleteEvent, updateEvent} from '../eventActions'
 import LoadingComponent from '../../layout/LoadingComponent'
 import EventActivity from '../EventActivity/EventActivity'
+import { firestoreConnect } from 'react-redux-firebase'
 
 const mapState = (state) => ({
-  events: state.events,
+  events: state.firestore.ordered.events,
   loading: state.async.loading
 }) 
 
@@ -45,4 +46,5 @@ const actions  = {
     }
 }
 
-export default connect(mapState, actions)(EventDashboard);
+export default connect(mapState, actions)
+ (firestoreConnect([{collection: 'events'}])(EventDashboard));
