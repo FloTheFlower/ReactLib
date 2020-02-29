@@ -5,12 +5,10 @@ import { SignedOutMenu } from "../menus/SignedOutMenu";
 import { SignedInMenu } from "../menus/SignedInMenu";
 import { connect } from "react-redux";
 import { openModal } from "../../modals/modalActions";
-import { logout } from "../../auth/authActions";
 import {withFirebase} from 'react-redux-firebase'
 
 const actions = {
-  openModal,
-  logout
+  openModal
 };
 
 const mapState = state => ({
@@ -27,7 +25,7 @@ class NavBar extends Component {
   };
 
   handleSignOut = () => {
-    this.props.logout();
+    this.props.firebase.logout();
     this.props.history.push("/");
   };
 
