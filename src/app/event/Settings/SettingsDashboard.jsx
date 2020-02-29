@@ -5,7 +5,7 @@ import { Route, Redirect, Switch } from 'react-router-dom'
 import { BasicPage } from './BasicPage'
 import { AboutPage } from './AboutPage'
 import { PhotosPage } from './PhotosPage'
-import { AccountPage } from './AccountPage'
+import AccountPage  from './AccountPage'
 
 export const SettingsDashboard = () => {
     return (
