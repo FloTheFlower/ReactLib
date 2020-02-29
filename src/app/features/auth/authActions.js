@@ -48,17 +48,28 @@ async (dispatch, getState, {getFirebase, getFirestore}
 }
 
 export const socialLogin = (selectedProvider) => 
-async (dispatch, getState, {getFirebase}) => {
+async (dispatch, getState, {getFirebase, getFirestore}) => {
 
   const firebase = getFirebase();
+  const firestore = getFirestore();
   try {
 
     dispatch(closeModal());
-    await firebase.login({
+    const user = await firebase.login({
       provider: selectedProvider,
       type: 'popup'
 
     })
+
+    if (user.addionalUserInfo.isNewUser){
+      await firestore.set('users/${user.user.uid}', {
+          displayName: user.profile.displayName,
+          photoURL: user.profile.avatarUrl,
+          createdAt: firestore.FieldValue.serverTimestamp()
+      })
+    }
+
+    console.log(user)
 
 
   } catch(error){
