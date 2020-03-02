@@ -9,8 +9,7 @@ const validate = combineValidators({
     newPassword1: isRequired({message: 'Please enter a password.'}),
     newPassword2: composeValidators(
         isRequired({message: 'Please confirm your new password'}),
-        matchesField('newPassword1')({message: 'Password do not match'})()
-
+        matchesField('newPassword1')({message: 'Passwords do not match'})()
     )
 })
 
