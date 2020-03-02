@@ -4,6 +4,9 @@ import {Field, reduxForm} from 'redux-form';
 import DateInput from "../../../app/common/form/DateInput";
 import PlaceInput from "../../../app/common/form/PlaceInput";
 import Textinput from "../../../app/common/form/Textinput";
+import RadioInput from '../../common/form/RadioInput';
+import moment from 'moment';
+import { addYears } from 'date-fns';
 
 class BasicPage extends Component {
 
@@ -21,13 +24,33 @@ class BasicPage extends Component {
                         placeholder='Known As'
                     />
                     <Form.Group inline>
-                      {/* todo: Gender Radio button */}
+                    <label>Gender: </label>
+                    <Field 
+                    name = 'gender'
+                    type = 'radio'
+                    value = 'male'
+                    label = 'Male'
+                    component={RadioInput}
+                    />
+                      <Field 
+                    name = 'gender'
+                    type = 'radio'
+                    value = 'female'
+                    label = 'Female'
+                    component={RadioInput}
+                    />
+
                     </Form.Group>
                     <Field
                         width={8}
                         name='dateOfBirth'
                         component={DateInput}
                         placeholder='Date of Birth'
+                        dateFormat = 'YYYY-MM-DD'
+                        showYearDropdown={true}
+                        showMonthDropdown={true}
+                        dropdownMode='select'
+                        maxDate={moment().subtract(18, 'years').toDate()}
                     />
                     <Field
                         name='city'
