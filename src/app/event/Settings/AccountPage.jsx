@@ -9,13 +9,12 @@ const validate = combineValidators({
     newPassword1: isRequired({message: 'Please enter a password.'}),
     newPassword2: composeValidators(
         isRequired({message: 'Please confirm your new password'}),
-        matchesField
-
+        matchesField('newPassword1')({message: 'Password do not match'})()
 
     )
 })
 
-const AccountPage = ({ error }) => {
+const AccountPage = ({ error, invalid, submitting }) => {
   return (
     <Segment>
       <Header dividing size="large" content="Account" />
@@ -49,7 +48,7 @@ const AccountPage = ({ error }) => {
             </Label>
           )}
           <Divider />
-          <Button size="large" positive content="Update Password" />
+          <Button disabled={invalid || submitting} size="large" positive content="Update Password" />
         </Form>
       </div>
 
@@ -74,4 +73,4 @@ const AccountPage = ({ error }) => {
   );
 };
 
-export default reduxForm({ form: 'account' })(AccountPage);
+export default reduxForm({ form: 'account', validate })(AccountPage);
