@@ -8,19 +8,20 @@ import {combineValidators, composeValidators, matchesField, isRequired} from 're
 const validate = combineValidators({
     newPassword1: isRequired({message: 'Please enter a password.'}),
     newPassword2: composeValidators(
-        isRequired({message: 'Please confirm your new password'}),
-        matchesField('newPassword1')({message: 'Passwords do not match'})()
-    )
+        isRequired({message: 'Please confirm your new password.'}),
+        matchesField('newPassword1')({message: 'Passwords do not match.'})
+    )()
 })
 
-const AccountPage = ({ error, invalid, submitting }) => {
+const AccountPage = ({ error, invalid, submitting, updatePassword, handleSubmit, providerId }) => {
   return (
     <Segment>
       <Header dividing size="large" content="Account" />
+      {providerId && providerId === 'password' &&
       <div>
         <Header color="teal" sub content="Change password" />
         <p>Use this form to update your account settings</p>
-        <Form>
+        <Form onSubmit={handleSubmit(updatePassword)}> 
           <Field
             width={8}
             name="newPassword1"
@@ -49,7 +50,9 @@ const AccountPage = ({ error, invalid, submitting }) => {
           <Divider />
           <Button disabled={invalid || submitting} size="large" positive content="Update Password" />
         </Form>
-      </div>
+      </div>}
+
+     {providerId && providerId === 'facebook.com' &&
 
       <div>
         <Header color="teal" sub content="Facebook Account" />
@@ -58,7 +61,10 @@ const AccountPage = ({ error, invalid, submitting }) => {
           <Icon name="facebook" />
           Go to Facebook
         </Button>
-      </div>
+          </div> }
+
+
+          {providerId && providerId === 'google.com' &&
 
       <div>
         <Header color="teal" sub content="Google Account" />
@@ -67,7 +73,9 @@ const AccountPage = ({ error, invalid, submitting }) => {
           <Icon name="google plus" />
           Go to Google
         </Button>
-      </div>
+      </div>}
+
+
     </Segment>
   );
 };

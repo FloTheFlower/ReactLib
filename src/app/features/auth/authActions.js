@@ -3,6 +3,7 @@ import { closeModal } from "../modals/modalActions";
 import firebase from '../../../app/config/firebase';
 import {toastr} from 'react-redux-toastr';
 
+
 export const login = (creds) => {
   return async (dispatch) => {
     try {
@@ -80,8 +81,8 @@ async (dispatch, getState, {getFirebase, getFirestore}) => {
 
 export const updatePassword = (creds) => 
 async (dispatch, getState, {getFirebase}) => {
-  const firebase = getFirebase;
-  const user = firebase.auth().currentUser;
+  const firebase = getFirebase();
+  const user = firebase.auth().currentUser 
   try{
 
     await user.updatePassword(creds.newPassword1)
