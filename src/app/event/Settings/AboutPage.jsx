@@ -16,12 +16,12 @@ const interests = [
   { key: 'travel', text: 'Travel', value: 'travel' }
 ];
 
-const AboutPage = ({ pristine, submitting }) => {
+const AboutPage = ({ pristine, submitting, handleSubmit, updateProfile }) => {
   return (
     <Segment>
       <Header dividing size="large" content="About Me" />
       <p>Complete your profile to get the most out of this site</p>
-      <Form>
+      <Form onSubmit={handleSubmit(updateProfile) }>
         <Form.Group inline>
           <label>Tell us your status: </label>
           <Field name="status" component={RadioInput} type="radio" value="single" label="Single" />
@@ -72,4 +72,4 @@ const AboutPage = ({ pristine, submitting }) => {
   );
 };
 
-export default reduxForm({ form: 'userProfile', enableReinitialize: true })(AboutPage);
+export default reduxForm({ form: 'userProfile', enableReinitialize: true, destroyOnUnmount: false })(AboutPage);
