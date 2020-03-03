@@ -1,4 +1,6 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, Fragment} from "react";
+import {connect} from 'react-redux';
+import toastr from 'react-redux-toastr';
 import {
   Image,
   Segment,
@@ -9,15 +11,45 @@ import {
   Card
 } from "semantic-ui-react";
 import DropzoneInput from "./DropzoneInput";
+import {uploadProfileImage} from '../../User/userActions'
 
-const PhotosPage = () => {
+const actions = {
+  uploadProfileImage
+}
+
+
+
+const PhotosPage = ({uploadProfileImage}) => {
  const [files, setFiles] = useState([]);
+const [image, setImage] = useState(null)
 
 useEffect(() => {
   return () => {
     files.forEach(file => URL.revokeObjectURL(file.preview))
   }
 }, [files])
+
+ 
+
+const handleUploadImage = async() => {
+  try{
+
+    await uploadProfileImage(image, files[0].name)
+    toastr.success('Success', 'Photo has been uploaded')
+
+  } catch(error) {
+    console.log(error);
+    toastr.error('Ooops', 'Something went wrong')
+  }
+}
+
+
+const handleCacnelCrop = () => {
+    setFiles([]);
+    setImage(null)
+
+}
+
 
     return (
       <Segment>
@@ -35,12 +67,26 @@ useEffect(() => {
           <Grid.Column width={1} />
           <Grid.Column width={4}>
             <Header sub color="teal" content="Step 3 - Preview & Upload" />
-            {files.length > 0 && 
+            {files.length > 0 && (
+              <Fragment>
             
             <Image src={files[0].preview} style={{minHeight: '200px', minWidth: '200px'}} />
-            }
+
+            <Button.Group>
+
+              <Button onClick={handleUploadImage} style={{width: '100px'}} positive icon='check' />
+              <Button onClick={handleCacnelCrop} style={{width: '100px'}} icon='close' />
+             
+
+            </Button.Group>
+            </Fragment>
+           )}
+
+
           </Grid.Column>
         </Grid>
+
+
 
         <Divider />
         <Header sub color="teal" content="All Photos" />
@@ -60,10 +106,11 @@ useEffect(() => {
               <Button basic icon="trash" color="red" />
             </div>
           </Card>
-        </Card.Group>
+        </Card.Group> 
+
       </Segment>
     );
   }
 
 
-export default PhotosPage;
+export default connect(null, actions)(PhotosPage);
