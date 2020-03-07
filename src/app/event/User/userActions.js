@@ -1,5 +1,6 @@
 import {toastr} from 'react-redux-toastr'
 import { asyncActionStart, asyncActionFinish, asyncActionError  } from '../../features/async/asyncActions';
+import cuid from 'cuid';
 
 export const updateProfile = (user) => 
 async (dispatch, getState, {getFirebase}) => {
@@ -16,12 +17,13 @@ async (dispatch, getState, {getFirebase}) => {
 
 export const uploadProfileImage = (file,  fileName) => 
 async (dispatch, getState, {getFirebase, getFirestore}) => {
+    const imageName = cuid();
     const firebase = getFirebase();
     const firestore = getFirestore();
     const user = firebase.auth().currentUser;
     const path = `${user.uid}/user_images`;
     const options = {
-        name: fileName
+        name: imageName
     };
     try {
 
