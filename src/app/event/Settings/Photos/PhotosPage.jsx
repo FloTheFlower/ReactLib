@@ -9,11 +9,10 @@ import {
   Header,
   Divider,
   Grid,
-  Button,
-  Card
+  Button
 } from "semantic-ui-react";
 import DropzoneInput from "./DropzoneInput";
-import {uploadProfileImage, deletePhoto} from '../../User/userActions'
+import {uploadProfileImage, deletePhoto, setMainPhoto} from '../../User/userActions'
 import UserPhotos from "./UserPhotos";
 
 
@@ -31,7 +30,8 @@ const query = ({auth}) => {
 
 const actions = {
   uploadProfileImage, 
-  deletePhoto
+  deletePhoto, 
+  setMainPhoto
 }
 
 
@@ -41,7 +41,7 @@ const mapState = (state) => ({
   photos: state.firestore.ordered.photos
 })
 
-const PhotosPage = ({uploadProfileImage, photos, profile, deletePhoto}) => {
+const PhotosPage = ({uploadProfileImage, photos, profile, deletePhoto, setMainPhoto}) => {
  const [files, setFiles] = useState([]);
 const [image, setImage] = useState(null)
 
@@ -78,6 +78,16 @@ const handleDeletePhoto = async (photo) => {
   } catch(error){
     console.log(error)
     toastr.error('Oops', error.message)
+  }
+}
+
+const handleSetMainPhoto = async (photo) => {
+  try {
+
+    await setMainPhoto(photo);
+
+  } catch(error){ 
+    console.log(error)
   }
 }
 
@@ -120,7 +130,7 @@ const handleDeletePhoto = async (photo) => {
 
 
         <Divider />
-       <UserPhotos photos={photos} profile={profile}  deletePhoto={handleDeletePhoto}/>
+       <UserPhotos photos={photos} profile={profile}  deletePhoto={handleDeletePhoto}  setMainPhoto={handleSetMainPhoto}/>
       </Segment>
     );
   }
