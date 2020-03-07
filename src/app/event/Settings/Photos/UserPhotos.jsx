@@ -12,8 +12,8 @@ const UserPhotos = ({photos, profile}) => {
             <Button positive>Main Photo</Button>
           </Card>
                 {photos && photos.map(photo => (
-                    <Card>
-            <Image src="https://randomuser.me/api/portraits/men/20.jpg" />
+                    <Card key={photo.id}>
+            <Image src= {photo.url}/>
             <div className="ui two buttons">
               <Button basic color="green">
                 Main
