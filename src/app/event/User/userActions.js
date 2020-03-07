@@ -48,7 +48,7 @@ async (dispatch, getState, {getFirebase, getFirestore}) => {
             doc: user.uid, 
             subcollections: [{collection: 'photos'}]
         }, {      
-            name: fileName,
+            name: imageName,
             url: downloadURL
         })
 
@@ -59,3 +59,25 @@ async (dispatch, getState, {getFirebase, getFirestore}) => {
         dispatch(asyncActionError())
     }
 }
+
+ export const deltePhoto = (photo) => 
+    async (dispatch, getState, {getFirebase, getFirestore}) => {
+        const firebase = getFirebase()
+        const firestore = getFirestore()
+        const user = firebase.aut().currentUser
+
+        try {
+            await firebase.deleteFile('${user.uid}/user_images/{poto_name}');
+            await firestore.delte({
+                collection: 'users',
+                doc: user.uid, 
+                subcollections: [{collection: 'photos', doc: photo.id}]
+            })
+
+
+        } catch(error) {
+            console.log(error);
+            throw new Error ('Problem deleting the photo')
+
+        }
+    }
