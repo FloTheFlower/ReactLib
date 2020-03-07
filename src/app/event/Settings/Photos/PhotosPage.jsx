@@ -14,6 +14,7 @@ import {
 } from "semantic-ui-react";
 import DropzoneInput from "./DropzoneInput";
 import {uploadProfileImage} from '../../User/userActions'
+import UserPhotos from "./UserPhotos";
 
 
 const query = ({auth}) => {
@@ -35,10 +36,11 @@ const actions = {
 
 const mapState = (state) => ({
   auth: state.firebase.auth,
-  profile: state.firebase.profile
+  profile: state.firebase.profile,
+  photos: state.firestore.ordered.photos
 })
 
-const PhotosPage = ({uploadProfileImage}) => {
+const PhotosPage = ({uploadProfileImage, photos, profile}) => {
  const [files, setFiles] = useState([]);
 const [image, setImage] = useState(null)
 
@@ -108,7 +110,7 @@ const handleCacnelCrop = () => {
 
 
         <Divider />
-       
+       <UserPhotos photos={photos} profile={profile}/>
       </Segment>
     );
   }
