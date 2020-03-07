@@ -60,7 +60,7 @@ async (dispatch, getState, {getFirebase, getFirestore}) => {
     }
 }
 
- export const deltePhoto = (photo) => 
+ export const deletePhoto = (photo) => 
     async (dispatch, getState, {getFirebase, getFirestore}) => {
         const firebase = getFirebase()
         const firestore = getFirestore()
@@ -80,4 +80,22 @@ async (dispatch, getState, {getFirebase, getFirestore}) => {
             throw new Error ('Problem deleting the photo')
 
         }
+    }
+
+
+    export const setMainPhoto = photo => 
+    async (dispatch, getState, {getFirebase}) => {
+
+        const firebase = getFirebase();
+
+        try{
+
+            return await firebase.updateProfile({
+                photoURL: photo.url
+            })
+
+        } catch(error){
+            console.log(error)
+        }
+
     }
