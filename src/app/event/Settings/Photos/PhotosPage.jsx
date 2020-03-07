@@ -1,5 +1,7 @@
 import React, {useState, useEffect, Fragment} from "react";
 import {connect} from 'react-redux';
+import {firestoreConnect} from 'react-redux-firebase';
+import {compose} from 'redux';
 import toastr from 'react-redux-toastr';
 import {
   Image,
@@ -13,11 +15,28 @@ import {
 import DropzoneInput from "./DropzoneInput";
 import {uploadProfileImage} from '../../User/userActions'
 
+
+const query = ({auth}) => {
+  return [
+
+    {
+      collection: 'users',
+      doc: auth.uid, 
+      subcollections: [{collection: 'photos'}], 
+      storeAs: 'photos'
+    }
+  ]
+}
+
 const actions = {
   uploadProfileImage
 }
 
 
+const mapState = (state) => ({
+  auth: state.firebase.auth,
+  profile: state.firebase.profile
+})
 
 const PhotosPage = ({uploadProfileImage}) => {
  const [files, setFiles] = useState([]);
@@ -113,4 +132,7 @@ const handleCacnelCrop = () => {
   }
 
 
-export default connect(null, actions)(PhotosPage);
+export default compose(
+  connect(mapState, actions),
+  firestoreConnect(auth => query(auth))
+)(PhotosPage);
