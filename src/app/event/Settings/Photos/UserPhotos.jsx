@@ -2,6 +2,13 @@ import React, {Fragment} from 'react'
 import { Header, Card, Image, Button } from 'semantic-ui-react'
 
 const UserPhotos = ({photos, profile}) => {
+    let filteredPhotos;
+    if (photos){
+
+        filteredPhotos = photos.filter(photo => {
+            return photo.url !== profile.photoURL
+        })
+    }
     return (
         <Fragment>
         <Header sub color="teal" content="All Photos" />
@@ -11,7 +18,7 @@ const UserPhotos = ({photos, profile}) => {
             <Image src={profile.photoURL} />
             <Button positive>Main Photo</Button>
           </Card>
-                {photos && photos.map(photo => (
+                {photos && filteredPhotos.map(photo => (
                     <Card key={photo.id}>
             <Image src= {photo.url}/>
             <div className="ui two buttons">
