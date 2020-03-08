@@ -4,7 +4,13 @@ import { fetchSampleData } from "../data/mockApi"
 import { toastr } from "react-redux-toastr"
 
 export const createEvent = (event) => {
-    return async dispatch => {
+    return async (dispatch, getState, {getFirestore, getFirebase} ) => {
+
+        const firestore = getFirestore();
+        const firebase = getFirebase();
+        const user = firebase.auth().currentUser
+
+
         try {
             dispatch({
                 type: CREATE_EVENT, 
