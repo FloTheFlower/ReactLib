@@ -38,10 +38,11 @@ const actions = {
 const mapState = (state) => ({
   auth: state.firebase.auth,
   profile: state.firebase.profile,
-  photos: state.firestore.ordered.photos
+  photos: state.firestore.ordered.photos,
+  loading: state.async.loading
 })
 
-const PhotosPage = ({uploadProfileImage, photos, profile, deletePhoto, setMainPhoto}) => {
+const PhotosPage = ({uploadProfileImage, photos, profile, deletePhoto, setMainPhoto, loading}) => {
  const [files, setFiles] = useState([]);
 const [image, setImage] = useState(null)
 
@@ -114,9 +115,9 @@ const handleSetMainPhoto = async (photo) => {
             <Image src={files[0].preview} style={{minHeight: '200px', minWidth: '200px'}} />
 
             <Button.Group>
-
-              <Button onClick={handleUploadImage} style={{width: '100px'}} positive icon='check' />
-              <Button onClick={handleCacnelCrop} style={{width: '100px'}} icon='close' />
+            
+              <Button   loading = {loading} onClick={handleUploadImage} style={{width: '100px'}} positive icon='check' />
+              <Button   disabled = {loading} onClick={handleCacnelCrop} style={{width: '100px'}} icon='close' />
              
 
             </Button.Group>
