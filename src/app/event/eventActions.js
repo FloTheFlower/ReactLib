@@ -8,7 +8,9 @@ export const createEvent = (event) => {
 
         const firestore = getFirestore();
         const firebase = getFirebase();
-        const user = firebase.auth().currentUser
+        const user = firebase.auth().currentUser;
+        const photoURL = getState().firebase.profile.photoURL;
+        const newEvent = createNewEvent(user, photoURL, event)
 
 
         try {
