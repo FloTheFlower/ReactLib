@@ -4,7 +4,6 @@ import React, { Component } from "react";
 import { Form, Segment, Button, Grid, Header } from "semantic-ui-react";
 import { connect } from 'react-redux';
 import { createEvent, updateEvent} from '../eventActions';
-import  cuid  from "cuid";
 import {reduxForm, Field} from 'redux-form';
 import {composeValidators, combineValidators, isRequired, hasLengthGreaterThan} from 'revalidate'
 import  Textinput  from "../../common/form/Textinput";
