@@ -21,7 +21,8 @@ if (state.firestore.ordered.events && state.firestore.ordered.events.length > 0 
 }
 
     return {
-        event
+        event,
+        auth: state.firebase.auth
     }
 
 }
@@ -40,8 +41,10 @@ if (state.firestore.ordered.events && state.firestore.ordered.events.length > 0 
 
     render(){
         
-    const {event} = this.props;
+    const {event, auth} = this.props;
     const attendees = event && event.attendees && objectToArray(event.attendees)
+    const isHost = event.hostUid === auth.uid
+    const isGoing = attendees && attendees.some()
         return (
             <Grid>
                  <Grid.Column width={10}>
