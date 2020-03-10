@@ -16,7 +16,7 @@ const eventId = ownProps.match.params.id;
 let event = {};
 
 if (state.firestore.ordered.events && state.firestore.ordered.events.length > 0 ) {
-    event = state.events.filter(event => event.id === eventId)[0]
+    event = state.events.filter(event => event.id === eventId)[0] || {}
 
 }
 

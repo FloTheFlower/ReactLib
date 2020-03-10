@@ -12,16 +12,20 @@ import  SelectInput  from "../../common/form/SelectInput";
 import  DateInput  from "../../common/form/DateInput";
 import  PlaceInput  from "../../common/form/PlaceInput";
 import {getLatLng, geocodeByAddress} from 'react-places-autocomplete'
-
+import { withFirestore } from 'react-redux-firebase';
+import { toastr } from 'react-redux-toastr';
 
 const mapState = (state, ownProps) => {
   const eventId = ownProps.match.params.id;
 
+  
+
   let event = {}
 
-  if (eventId && state.events.length > 0 ){
-    event= state.events.filter(event => event.id === eventId)[0]
-  }
+  if (state.firestore.ordered.events && state.firestore.ordered.events.length > 0 ) {
+    event = state.events.filter(event => event.id === eventId)[0] || {}
+
+}
 
   return {
     initalValues: event
@@ -60,6 +64,15 @@ class EventForm extends Component {
       cityLatLng: {},
       venueLatLng: {}
     }
+
+    async componentDidMount() {
+      const {firestore, match, history} = this.props;
+      let event = await firestore.get(`events/${match.params.id}`);
+      if (!event.exists) {
+              history.push(`/events`)
+              toastr.error(`Sorry`, `Event not found`)
+      }
+  }
 
   onFormSubmit = async values => {
     values.venueLatLng = this.state.venueLatLng;
@@ -173,8 +186,8 @@ class EventForm extends Component {
   }
 }
 
-export default connect(
+export default withFirestore (connect(
   mapState, 
    actions
   ) 
-  (reduxForm({form: 'eventForm', validate}) (EventForm));
+  (reduxForm({form: 'eventForm', validate}) (EventForm)));
