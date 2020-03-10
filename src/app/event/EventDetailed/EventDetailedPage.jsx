@@ -7,6 +7,7 @@ import EventDetailedChat  from './EventDetailedChat'
 import EventDetailedSidebar  from './EventDetailedSidebar'
 import { withFirestore } from 'react-redux-firebase';
 import { toastr } from 'react-redux-toastr';
+import { objectToArray } from '../../common/util/helpers';
 
 
 const mapState = (state, ownProps) => {
@@ -14,7 +15,7 @@ const eventId = ownProps.match.params.id;
 
 let event = {};
 
-if (eventId && state.events.length > 0 ) {
+if (state.firestore.ordered.events && state.firestore.ordered.events.length > 0 ) {
     event = state.events.filter(event => event.id === eventId)[0]
 
 }
@@ -40,6 +41,7 @@ if (eventId && state.events.length > 0 ) {
     render(){
         
     const {event} = this.props;
+    const attendees = event && event.attendees && objectToArray(event.attendees)
         return (
             <Grid>
                  <Grid.Column width={10}>
@@ -49,7 +51,7 @@ if (eventId && state.events.length > 0 ) {
                  </Grid.Column>
                  
                  <Grid.Column width={6}>
-                     <EventDetailedSidebar attendees={event.attendees} />
+                     <EventDetailedSidebar attendees={attendees} />
                  </Grid.Column>
             </Grid>
          )
