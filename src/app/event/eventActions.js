@@ -1,4 +1,4 @@
-import { UPDATE_EVENT, DELETE_EVENT, FETCH_EVENTS } from "./eventConstants"
+import {  UPDATE_EVENT, FETCH_EVENTS } from "./eventConstants"
 import { asyncActionStart, asyncActionFinish, asyncActionError } from "../features/async/asyncActions"
 import { fetchSampleData } from "../data/mockApi"
 import { toastr } from "react-redux-toastr"
@@ -73,17 +73,6 @@ async (dispatch, getState, {getFirestore}) => {
     }
 }
 
-export const deleteEvent = (eventId) => {
-
-    return {
-
-        type: DELETE_EVENT, 
-        payload: {
-                eventId
-        }
-    }
-
-}
 
 export const loadEvents = () => {
     return async dispatch => {
