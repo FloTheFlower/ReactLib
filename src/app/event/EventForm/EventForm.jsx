@@ -71,6 +71,12 @@ class EventForm extends Component {
       if (!event.exists) {
               history.push(`/events`)
               toastr.error(`Sorry`, `Event not found`)
+      } else {
+        this.setState({
+          venueLatLng: event.data().venueLatLng
+
+        })
+       
       }
   }
 
@@ -190,4 +196,4 @@ export default withFirestore (connect(
   mapState, 
    actions
   ) 
-  (reduxForm({form: 'eventForm', validate}) (EventForm)));
+  (reduxForm({form: 'eventForm', validate, enableReinitialize: true}) (EventForm)));

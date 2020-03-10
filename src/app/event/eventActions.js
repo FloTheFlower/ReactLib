@@ -35,8 +35,10 @@ export const createEvent = (event) => {
 
 export const updateEvent = (event) => {
 
-    return async dispatch => {
+    return async (dispatch, getState, {getFirestore}) => {
+        const firestore = getFirestore();
         try {
+            await firestore.update(`events/${event.id}, event`)
             dispatch({
                 type: UPDATE_EVENT, 
                 payload: {
