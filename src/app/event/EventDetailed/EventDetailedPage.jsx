@@ -8,6 +8,7 @@ import EventDetailedSidebar  from './EventDetailedSidebar'
 import { withFirestore } from 'react-redux-firebase';
 import { toastr } from 'react-redux-toastr';
 import { objectToArray } from '../../common/util/helpers';
+import {goingToEvent} from '../User/userActions'
 
 
 const mapState = (state, ownProps) => {
@@ -27,28 +28,35 @@ if (state.firestore.ordered.events && state.firestore.ordered.events.length > 0 
 
 }
 
+const actions = {
+
+    goingToEvent
+}
+
 
  class EventDetailedPage extends Component {
 
     async componentDidMount() {
         const {firestore, match, history} = this.props;
-        let event = await firestore.get(`events/${match.params.id}`);
-        if (!event.exists) {
-                history.push(`/events`)
-                toastr.error(`Sorry`, `Event not found`)
-        }
+        let event = await firestore.setListener(`events/${match.params.id}`);
+       
     }
+
+    // async componentWillUnmount( {
+    //     const {firestore, match, history} = this.props;
+    //     let event = await firestore.unsetListener(`events/${match.params.id}`);
+    // })
 
     render(){
         
-    const {event, auth} = this.props;
+    const {event, auth, goingToEvent} = this.props;
     const attendees = event && event.attendees && objectToArray(event.attendees)
     const isHost = event.hostUid === auth.uid
     const isGoing = attendees && attendees.some(a => a.id === auth.uid)
         return (
             <Grid>
                  <Grid.Column width={10}>
-                     <EventDetailedHeader event ={event} isGoing={isGoing} isHost={isHost}  />
+                     <EventDetailedHeader event ={event} isGoing={isGoing} isHost={isHost}  goingToEvent={goingToEvent} />
                      <EventDetailedInfo event = {event} />
                      <EventDetailedChat />
                  </Grid.Column>
@@ -62,4 +70,4 @@ if (state.firestore.ordered.events && state.firestore.ordered.events.length > 0 
 }
 
 
-export default withFirestore (connect(mapState)(EventDetailedPage));
+export default withFirestore (connect(mapState, actions)(EventDetailedPage));
