@@ -52,6 +52,19 @@ export const updateEvent = (event) => {
     }
 }
 
+
+export const cancelToggel = (cancelled, eventId) =>
+async (dispatch, getState, {getFirestore}) => {
+    const firestore = getFirestore();
+    try { await firestore.update(`events/${eventId}`, {
+        cancelled : cancelled
+    })
+
+    }catch (error) {
+        console.log(error)
+    }
+}
+
 export const deleteEvent = (eventId) => {
 
     return {
