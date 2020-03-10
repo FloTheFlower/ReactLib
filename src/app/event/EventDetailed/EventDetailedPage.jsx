@@ -44,11 +44,11 @@ if (state.firestore.ordered.events && state.firestore.ordered.events.length > 0 
     const {event, auth} = this.props;
     const attendees = event && event.attendees && objectToArray(event.attendees)
     const isHost = event.hostUid === auth.uid
-    const isGoing = attendees && attendees.some()
+    const isGoing = attendees && attendees.some(a => a.id === auth.uid)
         return (
             <Grid>
                  <Grid.Column width={10}>
-                     <EventDetailedHeader event ={event} />
+                     <EventDetailedHeader event ={event} isGoing={isGoing} isHost={isHost}  />
                      <EventDetailedInfo event = {event} />
                      <EventDetailedChat />
                  </Grid.Column>
