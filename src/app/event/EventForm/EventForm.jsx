@@ -3,7 +3,7 @@
 import React, { Component } from "react";
 import { Form, Segment, Button, Grid, Header } from "semantic-ui-react";
 import { connect } from 'react-redux';
-import { createEvent, updateEvent} from '../eventActions';
+import { createEvent, updateEvent, cancelToggel} from '../eventActions';
 import {reduxForm, Field} from 'redux-form';
 import {composeValidators, combineValidators, isRequired, hasLengthGreaterThan} from 'revalidate'
 import  Textinput  from "../../common/form/Textinput";
@@ -28,13 +28,15 @@ const mapState = (state, ownProps) => {
 }
 
   return {
-    initalValues: event
+    initalValues: event, 
+    event
   };
 }; 
 
 const actions = {
   createEvent,
-  updateEvent
+  updateEvent, 
+  cancelToggel
 }
 
 const validate = combineValidators({
@@ -127,7 +129,7 @@ class EventForm extends Component {
 
 
   render() {
-    const {history, initalValues, invalid, submitting, pristine} = this.props;
+    const {history, initalValues, invalid, submitting, pristine, event, cancelToggel} = this.props;
     return (
       <Grid>
         <Grid.Column width={10}>
@@ -183,6 +185,14 @@ class EventForm extends Component {
           type="button">
             Cancel
           </Button>
+          <Button type='button' 
+          color={event.cancelled ? 'green' : 'red'}
+          floated = 'right'
+          content = {event.cancelled ? 'Reactivate event' : 'Cancel event '}
+          onClick={() => cancelToggel(!event.cancelled, event.id)}
+          
+          
+          />
         </Form>
       </Segment>
       </Grid.Column>
