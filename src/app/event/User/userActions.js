@@ -116,7 +116,7 @@ async (dispatch, getState, {getFirebase, getFirestore}) => {
         try {
 
             await firestore.update(`events/${event.id}`, {
-                [`attendees.${user.uid}`] : attendee
+                [`attendees.${user.uid}`] : firestore.FieldValue.delete()
             })
             await firestore.set(`event_attendee/${event.id}_${user.uid}`, {
 
